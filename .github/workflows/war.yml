@@ -71,7 +71,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
           status: ${{ job.status}}
-          message: "<https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/browse/${{ fromJson(steps.createIssue.outputs.response).key}}|${{ fromJson(steps.createIssue.outputs.response).key}}>"
+          message: "Created <https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/browse/${{ fromJson(steps.createIssue.outputs.response).key}}|${{ fromJson(steps.createIssue.outputs.response).key}}> issue, because no issue was refferd earlier"
 
 
 
