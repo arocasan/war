@@ -65,7 +65,7 @@ jobs:
               data: '{"fields":{"project":{"id":"10042"},"issuetype":{"id":"10002"},"components": [{"id": "10027"}],"summary":"${{ github.event.head_commit.message }}"}}'
 
         - name: Get new issue
-          if: ${{ success() }}
+          if: "!contains(github.event.head_commit.message, 'WAR-')"
           run: |
             echo ${{ steps.createIssue.outputs.response }}
             echo ${{ fromJson(steps.createIssue.outputs.response).key}}
