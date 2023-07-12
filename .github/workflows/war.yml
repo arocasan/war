@@ -57,16 +57,16 @@ jobs:
           --header 'Accept: application/json'\
           --header 'Content-Type: application/json' \
           --data '{\
-              "fields":{
-              "project":{
-                "id":"10042"
+              "fields":{\
+              "project":{\
+                "id":"10042"\
               },\
-              "issuetype":{
-                "id":"10002"
+              "issuetype":{\
+                "id":"10002"\
               },\
-              "components": [
-              {
-              "id": "10027"
+              "components": [\
+              {\
+              "id": "10027"\
               }
               ],\
               "summary":"Postman"\
