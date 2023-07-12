@@ -1,4 +1,5 @@
 import random
+from typing import Any
 
 #Deck config
 suits = ("Hearts","Diamonds","Spades","Clubs")
@@ -17,3 +18,45 @@ class Card:
     def __str__(self) -> str:
 
         return self.rank + " of " + self.rank
+    
+
+class Deck:
+    def __init__(self) -> None:
+        self.all_cards = []
+
+        for suit in suits: 
+            for rank in ranks: 
+                self.all_cards.append(Card(suit,rank))
+
+
+    def shuffle(self):
+
+        random.shuffle(self.all_cards)
+
+
+    def deal_one(self):
+
+        return self.all_cards.pop()
+    
+
+class Player:
+    
+    def __init__(self,name) -> None:
+
+        self.name = name
+
+        self.all_cards = []
+ 
+    def remove_one(self):
+
+        return self.all_cards.pop(0)
+
+    def add_cards(self,new_cards):
+        
+        if type(new_cards) == type([]):
+            self.all_cards.extend(new_cards)
+        else:
+            self.all_cards.append(new_cards)
+
+    def __str__(self) -> str:
+        return f"Player {self.name} has {len(self.all_cards)} cards"
