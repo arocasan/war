@@ -47,17 +47,15 @@ jobs:
           --header 'Accept: application/json'
 
       - name: Create Issue
-
         if: "!contains(github.event.head_commit.message, 'WAR-')"
-        run: |
-          echo lets go!
-    
-          curl --request POST \
-          --url 'https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/rest/api/3/issue' \
-          --user '${{ secrets.JIRA_CLOUD_USER }}:${{ secrets.JIRA_CLOUD_TOKEN }}' \
-          --header 'Accept: application/json'\
-          --header 'Content-Type: application/json' \
-          --data '{"fields":{"project":{"id":"10042"},"issuetype":{"id":"10002"},"components": [{"id": "10027"}],"summary":"${{ github.event.head_commit.message }}"}}'
+        uses: fjogeleit/http-request-action@v1
+        with:
+            url: 'https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/rest/api/3/issue'
+            method: 'POST'
+            username: '${{ secrets.JIRA_CLOUD_USER }}'
+            password: '${{ secrets.JIRA_CLOUD_TOKEN }}'
+            customHeaders: '{"Content-Type": "application/json"}'
+            data: '{"fields":{"project":{"id":"10042"},"issuetype":{"id":"10002"},"components": [{"id": "10027"}],"summary":"${{ github.event.head_commit.message }}"}}'
 
-        
+      
 
