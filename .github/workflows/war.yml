@@ -36,3 +36,17 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - name: Call Jira Cloud Please!!
+        env:
+          SITE: ${{ secrets.JIRA_CLOUD_SITE }}
+          PAT: ${{ secrets.JIRA_CLOUD_TOKEN}}
+          USER: ${{ secrets.JIRA_CLOUD_USER}}
+
+
+        run: | 
+          echo Soo this is happening 
+          curl --request GET \
+          --url 'https://%SITE%.atlassian.net/rest/api/3/project/WAR' \
+          --user '%USER%:%TOKEN%' \
+          --header 'Accept: application/json'
