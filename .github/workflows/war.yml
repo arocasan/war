@@ -50,7 +50,7 @@ jobs:
   create_issue:
       needs: sanity_check
       runs-on: ubuntu-latest
-      
+    
       steps:
         - name: Create Issue
           id: createIssue
@@ -79,9 +79,6 @@ jobs:
           with:
             status: ${{ job.status}}
             message: "Created <https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/browse/${{ fromJson(steps.createIssue.outputs.response).key}}|${{ fromJson(steps.createIssue.outputs.response).key}}> issue, because no issue was refferd earlier"
-
-
-
 
           
 
