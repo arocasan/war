@@ -48,6 +48,7 @@ jobs:
           --user '${{ secrets.JIRA_CLOUD_USER }}:${{ secrets.JIRA_CLOUD_TOKEN }}' \
           --header 'Accept: application/json'
   create_issue:
+      needs: sanity_check
       runs-on: ubuntu-latest
       
       steps:
@@ -68,6 +69,7 @@ jobs:
       steps:
 
         - name: Get new issue
+          if: ${{ success() && step.createIssue.conlusion == "success"}}
           run: |
             echo ${{ steps.createIssue.outputs.response }}
             echo ${{ fromJson(steps.createIssue.outputs.response).key}}
