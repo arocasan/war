@@ -56,9 +56,9 @@ jobs:
           --user '${{ secrets.JIRA_CLOUD_USER }}:${{ secrets.JIRA_CLOUD_TOKEN }}' \
           --header 'Accept: application/json'\
           --data '{
-            "fields":{
+            
               "summary":"${{ github.event.head_commit.message }}"
-            }
+            
           }'
 
         
