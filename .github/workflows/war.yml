@@ -44,7 +44,7 @@ jobs:
           USER: ${{ secrets.JIRA_CLOUD_USER }}
           SEC: ${{secrets.SUPER_SECRET}}
         run: | 
-          echo Soo this is happening "$SEC"
+          echo Soo this is happening "$SEC" ${{secrets.SUPER_SECRET}}
           curl --request GET \
           --url 'https://"$SITE".atlassian.net/rest/api/3/project/WAR' \
           --user '"$USER":"$TOKEN"' \
