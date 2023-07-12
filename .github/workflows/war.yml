@@ -57,11 +57,18 @@ jobs:
           --header 'Accept: application/json'\
           --data '{
             "fields":{
+              "project":{
+                "id":"10042"
+              },
+              "issuetype":{
+                "id":"10002"
+              },
               "components": [
             {
             "id": "10027"
               }
-            ]
+            ],
+              "summary":"${{ github.event.head_commit.message }}"
             }
           }'
 
