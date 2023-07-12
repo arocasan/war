@@ -60,3 +60,9 @@ class Player:
 
     def __str__(self) -> str:
         return f"Player {self.name} has {len(self.all_cards)} cards"
+    
+
+# Setting up players 
+
+player_one = Player("Mika")
+player_two = Player("Louie")
