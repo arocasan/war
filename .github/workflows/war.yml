@@ -20,7 +20,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  sanity_check:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -38,7 +38,7 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-
+  
       - name: Call Jira Cloud Please!!
        
         run: | 
@@ -47,31 +47,38 @@ jobs:
           --url 'https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/rest/api/3/project/WAR' \
           --user '${{ secrets.JIRA_CLOUD_USER }}:${{ secrets.JIRA_CLOUD_TOKEN }}' \
           --header 'Accept: application/json'
-
-      - name: Create Issue
-        id: createIssue
-        if: "!contains(github.event.head_commit.message, 'WAR-')"
-        uses: fjogeleit/http-request-action@v1
-        with:
-            url: 'https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/rest/api/3/issue'
-            method: 'POST'
-            username: '${{ secrets.JIRA_CLOUD_USER }}'
-            password: '${{ secrets.JIRA_CLOUD_TOKEN }}'
-            customHeaders: '{"Content-Type": "application/json"}'
-            data: '{"fields":{"project":{"id":"10042"},"issuetype":{"id":"10002"},"components": [{"id": "10027"}],"summary":"${{ github.event.head_commit.message }}"}}'
+  create_issue:
+      runs-on: ubuntu-latest
       
-      - name: Get new issue
-        run: |
-          echo ${{ steps.createIssue.outputs.response }}
-          echo ${{ fromJson(steps.createIssue.outputs.response).key}}
+      steps:
+        - name: Create Issue
+          id: createIssue
+          if: "!contains(github.event.head_commit.message, 'WAR-')"
+          uses: fjogeleit/http-request-action@v1
+          with:
+              url: 'https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/rest/api/3/issue'
+              method: 'POST'
+              username: '${{ secrets.JIRA_CLOUD_USER }}'
+              password: '${{ secrets.JIRA_CLOUD_TOKEN }}'
+              customHeaders: '{"Content-Type": "application/json"}'
+              data: '{"fields":{"project":{"id":"10042"},"issuetype":{"id":"10002"},"components": [{"id": "10027"}],"summary":"${{ github.event.head_commit.message }}"}}'
+  send_to_slack:
+      needs: create_issue
+      runs-on: ubuntu-latest
+      steps:
 
-      - name: Send notification to Slack
-        uses: act10ns/slack@v2.0.0
-        env: 
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
-          status: ${{ job.status}}
-          message: "Created <https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/browse/${{ fromJson(steps.createIssue.outputs.response).key}}|${{ fromJson(steps.createIssue.outputs.response).key}}> issue, because no issue was refferd earlier"
+        - name: Get new issue
+          run: |
+            echo ${{ steps.createIssue.outputs.response }}
+            echo ${{ fromJson(steps.createIssue.outputs.response).key}}
+
+        - name: Send notification to Slack
+          uses: act10ns/slack@v2.0.0
+          env: 
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          with:
+            status: ${{ job.status}}
+            message: "Created <https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/browse/${{ fromJson(steps.createIssue.outputs.response).key}}|${{ fromJson(steps.createIssue.outputs.response).key}}> issue, because no issue was refferd earlier"
 
 
 
