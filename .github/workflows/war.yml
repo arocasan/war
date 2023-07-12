@@ -69,7 +69,7 @@ jobs:
       steps:
 
         - name: Get new issue
-          if: ${{ success() && step.createIssue.conlusion == "success"}}
+          if: "!contains(github.event.head_commit.message, 'WAR-')"
           run: |
             echo ${{ steps.createIssue.outputs.response }}
             echo ${{ fromJson(steps.createIssue.outputs.response).key}}
