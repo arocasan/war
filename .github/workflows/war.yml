@@ -47,7 +47,7 @@ jobs:
           --header 'Accept: application/json'
 
       - name: Create Issue
-        if: "!contains(github.event.head_commit.message, "WAR-") 
+        if: "!contains(github.event.head_commit.message, "WAR-")"
         run: |
           echo lets go!
     
