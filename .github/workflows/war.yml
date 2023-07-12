@@ -46,6 +46,6 @@ jobs:
         run: | 
           echo Soo this is happening "$SEC" ${{secrets.SUPER_SECRET}}
           curl --request GET \
-          --url 'https://"$SITE".atlassian.net/rest/api/3/project/WAR' \
+          --url 'https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/rest/api/3/project/WAR' \
           --user '"$USER":"$TOKEN"' \
           --header 'Accept: application/json'
