@@ -56,9 +56,13 @@ jobs:
           --user '${{ secrets.JIRA_CLOUD_USER }}:${{ secrets.JIRA_CLOUD_TOKEN }}' \
           --header 'Accept: application/json'\
           --data '{
-            
-              "summary":"${{ github.event.head_commit.message }}"
-            
+            "fields":{
+              "components": [
+            {
+            "id": "10027"
+              }
+            ]
+            }
           }'
 
         
