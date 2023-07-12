@@ -38,14 +38,10 @@ jobs:
           echo test, and deploy your project.
 
       - name: Call Jira Cloud Please!!
-        env:
-          SITE: ${{ secrets.JIRA_CLOUD_SITE }}
-          PAT: ${{ secrets.JIRA_CLOUD_TOKEN }}
-          USER: ${{ secrets.JIRA_CLOUD_USER }}
-          SEC: ${{secrets.SUPER_SECRET}}
+       
         run: | 
           echo Soo this is happening "$SEC" ${{secrets.SUPER_SECRET}}
           curl --request GET \
           --url 'https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/rest/api/3/project/WAR' \
-          --user '"$USER":"$TOKEN"' \
+          --user '${{ secrets.JIRA_CLOUD_USER }}:${{ secrets.JIRA_CLOUD_TOKEN }}' \
           --header 'Accept: application/json'
