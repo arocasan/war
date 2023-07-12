@@ -68,7 +68,7 @@ jobs:
             "id": "10027"
               }
             ],
-              "summary":"${{ github.event.head_commit.message }}"
+              "summary":"Postman"
             }
           }'
 
