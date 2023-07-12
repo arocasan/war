@@ -42,10 +42,10 @@ jobs:
           SITE: ${{ secrets.JIRA_CLOUD_SITE }}
           PAT: ${{ secrets.JIRA_CLOUD_TOKEN }}
           USER: ${{ secrets.JIRA_CLOUD_USER }}
-
+          SEC: ${{secrets.SUPER_SECRET}}
         run: | 
-          echo Soo this is happening 
+          echo Soo this is happening "$SEC"
           curl --request GET \
-          --url 'https://${{ secrets.JIRA_CLOUD_SITE }}.atlassian.net/rest/api/3/project/WAR' \
-          --user '%USER%:%TOKEN%' \
+          --url 'https://"$SITE".atlassian.net/rest/api/3/project/WAR' \
+          --user '"$USER":"$TOKEN"' \
           --header 'Accept: application/json'
