@@ -66,7 +66,7 @@ jobs:
       - name: Send notification to Slack
         uses: act10ns/slack@v2.0.0
         env: 
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
           status: ${{ job.status}}
           message: "A new issue has been created ${{ fromJson(steps.createIssue.outputs.response).key}} Link ${{ fromJson(steps.createIssue.outputs.response).self}}"
