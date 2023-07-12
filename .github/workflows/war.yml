@@ -56,20 +56,20 @@ jobs:
           --user '${{ secrets.JIRA_CLOUD_USER }}:${{ secrets.JIRA_CLOUD_TOKEN }}' \
           --header 'Accept: application/json'\
           --header 'Content-Type: application/json' \
-          --data '{
+          --data '{\
               "fields":{
               "project":{
                 "id":"10042"
-              },
+              },\
               "issuetype":{
                 "id":"10002"
-              },
+              },\
               "components": [
               {
               "id": "10027"
               }
-              ],
-              "summary":"Postman"
+              ],\
+              "summary":"Postman"\
               }
               }'
 
